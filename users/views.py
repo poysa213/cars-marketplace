@@ -9,7 +9,7 @@ from rest_framework.authtoken.serializers import AuthTokenSerializer
 
 from knox.views import LoginView as KnoxLoginView
 from knox.models import AuthToken
-from authentication.serializers import LoginUserSerializer, UserSerializer, RegisterSerializer, RegisterAdminSerializer
+from .serializers import LoginUserSerializer, UserSerializer, RegisterSerializer, RegisterAdminSerializer
 
 User = get_user_model()
 class RegisterView(generics.GenericAPIView):

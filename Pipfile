@@ -6,6 +6,10 @@ name = "pypi"
 [packages]
 django = "*"
 djangorestframework = "*"
+cryptography = "*"
+jinja2 = "*"
+boto3 = "*"
+django-rest-knox = "*"
 
 [dev-packages]
 

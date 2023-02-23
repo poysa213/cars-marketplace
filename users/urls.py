@@ -2,7 +2,7 @@ from django.urls import path
 
 
 from knox import views as knox_views
-from authentication.views import  LoginView, RegisterView, ProfileView, RegisterAdminView
+from .views import  LoginView, RegisterView, ProfileView, RegisterAdminView
 
 
 app_name = 'authentication'
