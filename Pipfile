@@ -8,8 +8,10 @@ django = "*"
 djangorestframework = "*"
 cryptography = "*"
 jinja2 = "*"
-boto3 = "*"
 django-rest-knox = "*"
+django-algerography = "*"
+algerography = "*"
+pillow = "*"
 
 [dev-packages]
 

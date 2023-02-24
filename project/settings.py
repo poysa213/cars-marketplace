@@ -40,8 +40,12 @@ INSTALLED_APPS = [
 
     'knox',
 
+
     
     'users',
+    'services',
+    'store',
+     
 ]
 
 MIDDLEWARE = [
