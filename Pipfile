@@ -4,14 +4,16 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-django = "*"
-djangorestframework = "*"
+django = "==4.0"
+djangorestframework = "==3.13"
 cryptography = "*"
 jinja2 = "*"
 django-rest-knox = "*"
 django-algerography = "*"
 algerography = "*"
 pillow = "*"
+django-debug-toolbar = "*"
+drf-nested-routers = "*"
 
 [dev-packages]
 

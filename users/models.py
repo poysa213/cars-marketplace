@@ -16,10 +16,7 @@ class User(AbstractUser):
         return self.email
 
 
-class Profile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="profile")
-    phone_number = models.IntegerField(blank=True, null=True)
-    image = models.ImageField(blank=True, null=True)
+
     
 
 
@@ -39,3 +36,16 @@ class Daira(models.Model):
 
     def __str__(self) -> str:
         return self.name
+class Address(models.Model):
+    wilaya = models.ForeignKey(Wilaya, on_delete=models.CASCADE)
+    daira = models.ForeignKey(Daira, on_delete=models.CASCADE)
+    longitude = models.FileField(blank=True, null=True)
+    latitude = models.FileField(blank=True, null=True)
+
+
+class UserProfile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="profile")
+    phone_number = models.IntegerField(blank=True, null=True)
+    image = models.ImageField(blank=True, null=True)
+    address = models.OneToOneField(Address, on_delete=models.CASCADE, blank=True, null=True) 
+    birth_date = models.DateField(blank=True, null=True)

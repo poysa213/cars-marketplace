@@ -8,21 +8,25 @@ from django.contrib.auth import login
 from rest_framework import serializers
 from rest_framework import exceptions
 
+from .models import UserProfile
+
 User = get_user_model()
+
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('id', 'username', 'email', 'first_name', 'last_name')
 
 
-# class LoginUserSerializer(serializers.Serializer):
-#     username = serializers.CharField(allow_blank=True, required=False)
-#     email = serializers.EmailField()
-#     password = serializers.CharField(
-#         style={'input_type': 'password'},
-#         trim_whitespace=False
-#     )
 
+class UserProfileSerializer(serializers.ModelSerializer):
+    user = UserSerializer()
+    class Meta:
+        model = UserProfile
+        fields = ['user', 'phone_number', 'image', 'address', 'birth_date']
+
+        
+ 
 class LoginUserSerializer(serializers.Serializer):
     username = serializers.CharField(allow_blank=True, required=False)
     password = serializers.CharField(
@@ -30,37 +34,12 @@ class LoginUserSerializer(serializers.Serializer):
         trim_whitespace=False
     )
 
-    def validate(self,attrs):
-        # get password, and username (or email)
-        password = attrs.get("password")
-        username = attrs.get("username")
-        request = self.context.get('request')
-
-        # set user to None
-        user = None
-
-        # check if a user exists with the email address or username provided
-        if "@" in username:
-            user = User.objects.filter(email__iexact=username).first()
-        else:
-            user = User.objects.filter(username__iexact=username).first()
-
-        # raise an authentication failed error if a user with that username or email doesn't exist. 
-        if user is None:
-            raise exceptions.AuthenticationFailed(
-                detail="Credentials does not exist!")
-
-        else:
-            # check if password matches
-            if user.check_password(password):
-                login(user=user, request=request)
-                serializer = LoginUserSerializer(user).data
-                return serializer
-
-            # raise authentication failed error if it doesn't exist. 
-            else:
-                raise exceptions.AuthenticationFailed(
-                    detail="Wrong password")
+    def validate(self, data):
+        user = authenticate(**data)
+        if user and user.is_active:
+            return user
+        raise serializers.ValidationError('Incorrect Credentials Passed.')
+    
 
 
 

@@ -3,14 +3,15 @@ from django.contrib.auth  import get_user_model
 
 
 from rest_framework.response import Response
+from rest_framework.viewsets import ModelViewSet
 from rest_framework import generics,status
 from rest_framework.permissions import AllowAny, IsAuthenticated, IsAdminUser
 from rest_framework.authtoken.serializers import AuthTokenSerializer
 
 from knox.views import LoginView as KnoxLoginView
 from knox.models import AuthToken
-from .serializers import LoginUserSerializer, UserSerializer, RegisterSerializer, RegisterAdminSerializer
-
+from .serializers import LoginUserSerializer, UserSerializer, RegisterSerializer, RegisterAdminSerializer, UserProfileSerializer
+from .models import UserProfile
 User = get_user_model()
 class RegisterView(generics.GenericAPIView):
     serializer_class = RegisterSerializer
@@ -33,41 +34,30 @@ class LoginView(KnoxLoginView, AuthTokenSerializer):
     serializer_class = LoginUserSerializer
     permission_classes = (AllowAny,)
     
-    def post(self, request, format=None):
+    def post(self, request):
         serializer = LoginUserSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        user = serializer.validated_data.get('user')
-        # login(request, user)
-        return super(LoginView, self).post(request, format=None) 
-
-    def get_context_data(self, *args, **kwargs):
-        return {'request': self.request}
-    def get_context(self):
-        return {'request': self.request}
-    
-
-# class LoginView(KnoxLoginView):
-#     serializer_class = LoginUserSerializer
-#     permission_classes = (AllowAny,)
-
-#     def post(self, request, format=None):
-#         serializer = AuthTokenSerializer(data=request.data)
-#         serializer.is_valid(raise_exception=True)
-#         user = serializer.validated_data['user']
-#         login(request, user)
-#         return super(LoginView, self).post(request, format=None) 
-
-#     def get_context_data(self, *args, **kwargs):
-#         return {'request': self.request}
+        user = serializer.validated_data
+        return Response({
+            "user":  UserSerializer(user).data,
+            "token": AuthToken.objects.create(user)[1]
+        }) 
     
 
 
-class ProfileView(generics.RetrieveUpdateAPIView):
-    serializer_class = UserSerializer
+class ProfileView(ModelViewSet):
+    serializer_class = UserProfileSerializer
     permission_classes = (IsAuthenticated,)
-
-    def get_object(self):
-        return self.request.user
+    queryset = UserProfile.objects.select_related('user').all()
+    lookup_field = 'id'
+    
+    # def get_queryset(self):
+    #     return UserProfile.objects.filter(user_id=self.request.user.id)
+    
+    
+    # def get_object(self):
+    #     return UserProfile.objects.filter(user_id=self.request.user.id)
+    
 class RegisterAdminView(generics.CreateAPIView):
     serializer_class = RegisterAdminSerializer
     permission_classes = [IsAdminUser]
