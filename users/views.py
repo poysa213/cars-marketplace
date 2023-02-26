@@ -51,8 +51,8 @@ class ProfileView(ModelViewSet):
     queryset = UserProfile.objects.select_related('user').all()
     lookup_field = 'id'
     
-    # def get_queryset(self):
-    #     return UserProfile.objects.filter(user_id=self.request.user.id)
+    def get_queryset(self):
+        return UserProfile.objects.filter(user_id=self.request.user.id)
     
     
     # def get_object(self):
