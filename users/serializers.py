@@ -10,6 +10,7 @@ from rest_framework import exceptions
 
 from .models import UserProfile
 
+
 User = get_user_model()
 
 class UserSerializer(serializers.ModelSerializer):

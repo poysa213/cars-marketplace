@@ -1,6 +1,7 @@
 
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import SAFE_METHODS
+from rest_framework.response import Response
 
 
 from .models import Service, ServiceProvider
@@ -17,8 +18,25 @@ class ServiceViewSet(ModelViewSet):
 
 class ServiceProviderViewSet(ModelViewSet):
     queryset  = ServiceProvider.objects.all()
-    serializer_class = PostServiceProviderSerializer
+    # serializer_class = PostServiceProviderSerializer
     permission_classes = [IsOwnerOrAdminOrReadOnlyProviderOwner]
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        service_provider = serializer.save()
+        service_provider = ServiceProviderSerializer(serializer.data)
+        return Response(service_provider.data)
+    
+    def update(self, request, *args, **kwargs):
+        instance = self.get_object()
+        serializer = self.get_serializer(instance, data=request.data)
+        serializer.is_valid(raise_exception=True)
+        updated_instance = serializer.save() 
+        updated_serializer = self.get_serializer(updated_instance)
+        return Response(ServiceProviderSerializer(ServiceProvider.objects.get(user_id=request.user.id)).data)
+
+        
 
 
     def get_serializer_context(self):
@@ -29,5 +47,7 @@ class ServiceProviderViewSet(ModelViewSet):
             return ServiceProviderSerializer
         else:
             return PostServiceProviderSerializer
+        
+
 
 
