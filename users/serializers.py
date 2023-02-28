@@ -66,7 +66,7 @@ class RegisterAdminSerializer(serializers.ModelSerializer):
         extra_kwargs = {'password': {'write_only': True}}
 
     def create(self, validated_data):
-        password_data = validated_data.pop('password')
+        password_data = validated_data.pop('password' , '')
         user = User.objects.create_superuser(**validated_data)
         user.set_password(password_data)
         user.save()
