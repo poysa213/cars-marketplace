@@ -2,24 +2,31 @@
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import SAFE_METHODS
 from rest_framework.response import Response
+from rest_framework.filters import SearchFilter
+
+
+
 
 
 from .models import Service, ServiceProvider
 from .serializers import ServiceProviderSerializer, ServiceSerializer, PostServiceProviderSerializer
-from store.permissions import IsAdminOrReadOnly, IsOwnerOrAdminOrReadOnly, IsOwnerOrAdminOrReadOnlyProviderOwner
-
+from store.permissions import IsAdminOrReadOnly, IsOwnerOrAdminOrReadOnlyProviderOwner
+from .filters import ServiceFilter
 
 
 class ServiceViewSet(ModelViewSet):
     permission_classes = [IsAdminOrReadOnly]
     queryset  = Service.objects.all()
     serializer_class = ServiceSerializer
+    filterset_fields = ['name']
     
+
+
 
 class ServiceProviderViewSet(ModelViewSet):
     queryset  = ServiceProvider.objects.all()
-    # serializer_class = PostServiceProviderSerializer
     permission_classes = [IsOwnerOrAdminOrReadOnlyProviderOwner]
+    filterset_class = ServiceFilter
 
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)

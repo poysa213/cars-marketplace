@@ -1,5 +1,6 @@
 from rest_framework import serializers
 
+
 from .models import Service, ServiceProvider
 from users.serializers import UserSerializer
 
@@ -29,14 +30,17 @@ class PostServiceProviderSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         user = self.context.get('user')
-        services_ids = validated_data.pop('services_ids', [])
-        service_provider = ServiceProvider.objects.create(user=user, **validated_data)
+        if user.is_authenticated:
+            services_ids = validated_data.pop('services_ids', [])
+            service_provider = ServiceProvider.objects.create(user=user, **validated_data)
 
-        for service_id in services_ids:
-            service =  Service.objects.get(id=service_id)
-            if service is not None:
-                service_provider.services.add(service)
-        return service_provider
+            for service_id in services_ids:
+                service =  Service.objects.get(id=service_id)
+                if service is not None:
+                    service_provider.services.add(service)
+            return service_provider
+        raise serializers.ValidationError({'message': "You must login!"})
+        
     
     def update(self, instance, validated_data):
         services_ids = validated_data.pop('services_ids', [])
