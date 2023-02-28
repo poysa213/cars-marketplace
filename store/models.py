@@ -83,5 +83,5 @@ class Part(models.Model):
 
 class PartImage(models.Model):
     image = models.ImageField('store/images/parts',blank=True, null=True)
-    part = models.ForeignKey(Part, on_delete=models.CASCADE, null= True, related_name="parts", blank=True)
+    part = models.ForeignKey(Part, on_delete=models.CASCADE, null= True, related_name="images", blank=True)
 

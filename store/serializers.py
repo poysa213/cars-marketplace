@@ -57,6 +57,10 @@ class CarSerializer(serializers.ModelSerializer):
     
     
     
+class PartCategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = PartCategory
+        fields = ['id', 'name']
 
 class PartImageSerializer(serializers.ModelSerializer):
     class Meta:
@@ -69,28 +73,38 @@ class PartImageSerializer(serializers.ModelSerializer):
 
 
 class PartSerializer(serializers.ModelSerializer):
+    seller = UserSerializer(read_only=True)
     class Meta:
         model = Part
-        fields = ['seller', 'category', 'price', 'is_verify', 'date', 'state', 'market', 'model']
+        fields = ['id', 'seller', 'category', 'price', 'is_verify', 'date', 'state', 'market', 'model']
 
 
 class PostPartSerializer(serializers.ModelSerializer):
+    images = PartImageSerializer(many=True, required=False)
+    category_id = serializers.IntegerField()
     class Meta:
         model = Part
-        fields = ['seller', 'category', 'price', 'is_verify', 'date', 'state', 'market', 'model']
+        fields = ['category_id', 'price', 'date', 'market', 'model', 'images']
 
     def create(self, validated_data):
         user = self.context.get('user', '')
-        if user.is_authenticated:
-            part_images = validated_data.pop('images', [])
-            part = Part.objects.create(seller=user, **validated_data)
-            for image in part_images:
-                part_image = CarImage.objects.create(part=part, image=image)
-                part_image.save()
-            return part
-        raise serializers.ValidationError(
-            {"message": "You must login!"}
-        )
+        category_id = validated_data.pop('category_id', None)
+        category = PartCategory.objects.get(id=category_id)
+        # raise serializers.ValidationError({"message": "E"})
+        if user.is_authenticated :
+            if category is not None:
+                part_images = validated_data.pop('images', [])
+                part = Part.objects.create(seller=user, category=category, **validated_data)
+                for image in part_images:
+                    part_image = PartImage.objects.create(part=part, image=image)
+                    part_image.save()
+                return part
+            else:
+                msg = {"message": "Enter a valid id category"}
+        else:
+             msg = {"message": "You must login!"}
+            
+        raise serializers.ValidationError(msg)
     
 class PartCategorySerializer(serializers.ModelSerializer):
     class Meta:
