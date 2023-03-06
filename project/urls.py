@@ -18,14 +18,26 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import path, include
 
+from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
+
 urlpatterns = [
     path('__debug__/', include('debug_toolbar.urls')), 
     path('admin/', admin.site.urls),
     path('api/v1/users/', include('users.urls')),
     path('api/v1/store/', include('store.urls')),
     path('api/v1/', include('services.urls')),
+    path("v1/schema/", SpectacularAPIView.as_view(), name="schema"),
+    path(
+    "v1/docs/",
+    SpectacularSwaggerView.as_view(
+        template_name="swagger-ui.html", url_name="schema"
+    ),
+    name="swagger-ui",
+),
 ]
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL,
                           document_root=settings.MEDIA_ROOT)
+
+

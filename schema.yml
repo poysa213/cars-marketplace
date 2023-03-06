@@ -1,0 +1,1984 @@
+openapi: 3.0.3
+info:
+  title: Tonobili API
+  version: 1.0.0
+  description: Your project description
+paths:
+  /api/v1/providers/:
+    get:
+      operationId: api_v1_providers_list
+      parameters:
+      - in: query
+        name: service
+        schema:
+          type: string
+      - in: query
+        name: services
+        schema:
+          type: array
+          items:
+            type: integer
+        explode: true
+        style: form
+      tags:
+      - api
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ServiceProvider'
+          description: ''
+    post:
+      operationId: api_v1_providers_create
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PostServiceProvider'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PostServiceProvider'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PostServiceProvider'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PostServiceProvider'
+          description: ''
+  /api/v1/providers/{id}/:
+    get:
+      operationId: api_v1_providers_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this service provider.
+        required: true
+      tags:
+      - api
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceProvider'
+          description: ''
+    put:
+      operationId: api_v1_providers_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this service provider.
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PostServiceProvider'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PostServiceProvider'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PostServiceProvider'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PostServiceProvider'
+          description: ''
+    patch:
+      operationId: api_v1_providers_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this service provider.
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedPostServiceProvider'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedPostServiceProvider'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedPostServiceProvider'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PostServiceProvider'
+          description: ''
+    delete:
+      operationId: api_v1_providers_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this service provider.
+        required: true
+      tags:
+      - api
+      responses:
+        '204':
+          description: No response body
+  /api/v1/services/:
+    get:
+      operationId: api_v1_services_list
+      parameters:
+      - in: query
+        name: name
+        schema:
+          type: string
+      tags:
+      - api
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Service'
+          description: ''
+    post:
+      operationId: api_v1_services_create
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Service'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Service'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Service'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Service'
+          description: ''
+  /api/v1/services/{id}/:
+    get:
+      operationId: api_v1_services_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this service.
+        required: true
+      tags:
+      - api
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Service'
+          description: ''
+    put:
+      operationId: api_v1_services_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this service.
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Service'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Service'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Service'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Service'
+          description: ''
+    patch:
+      operationId: api_v1_services_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this service.
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedService'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedService'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedService'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Service'
+          description: ''
+    delete:
+      operationId: api_v1_services_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this service.
+        required: true
+      tags:
+      - api
+      responses:
+        '204':
+          description: No response body
+  /api/v1/store/cars/:
+    get:
+      operationId: api_v1_store_cars_list
+      tags:
+      - api
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Car'
+          description: ''
+    post:
+      operationId: api_v1_store_cars_create
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PostCar'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PostCar'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PostCar'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PostCar'
+          description: ''
+  /api/v1/store/cars/{car_pk}/images/:
+    get:
+      operationId: api_v1_store_cars_images_list
+      parameters:
+      - in: path
+        name: car_pk
+        schema:
+          type: integer
+        required: true
+      tags:
+      - api
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CarImage'
+          description: ''
+    post:
+      operationId: api_v1_store_cars_images_create
+      parameters:
+      - in: path
+        name: car_pk
+        schema:
+          type: integer
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CarImage'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CarImage'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CarImage'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CarImage'
+          description: ''
+  /api/v1/store/cars/{car_pk}/images/{id}/:
+    get:
+      operationId: api_v1_store_cars_images_retrieve
+      parameters:
+      - in: path
+        name: car_pk
+        schema:
+          type: integer
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this car image.
+        required: true
+      tags:
+      - api
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CarImage'
+          description: ''
+    put:
+      operationId: api_v1_store_cars_images_update
+      parameters:
+      - in: path
+        name: car_pk
+        schema:
+          type: integer
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this car image.
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CarImage'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CarImage'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CarImage'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CarImage'
+          description: ''
+    patch:
+      operationId: api_v1_store_cars_images_partial_update
+      parameters:
+      - in: path
+        name: car_pk
+        schema:
+          type: integer
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this car image.
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedCarImage'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedCarImage'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedCarImage'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CarImage'
+          description: ''
+    delete:
+      operationId: api_v1_store_cars_images_destroy
+      parameters:
+      - in: path
+        name: car_pk
+        schema:
+          type: integer
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this car image.
+        required: true
+      tags:
+      - api
+      responses:
+        '204':
+          description: No response body
+  /api/v1/store/cars/{id}/:
+    get:
+      operationId: api_v1_store_cars_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this car.
+        required: true
+      tags:
+      - api
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Car'
+          description: ''
+    put:
+      operationId: api_v1_store_cars_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this car.
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PostCar'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PostCar'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PostCar'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PostCar'
+          description: ''
+    patch:
+      operationId: api_v1_store_cars_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this car.
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedPostCar'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedPostCar'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedPostCar'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PostCar'
+          description: ''
+    delete:
+      operationId: api_v1_store_cars_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this car.
+        required: true
+      tags:
+      - api
+      responses:
+        '204':
+          description: No response body
+  /api/v1/store/markets/:
+    get:
+      operationId: api_v1_store_markets_list
+      tags:
+      - api
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CarMarket'
+          description: ''
+    post:
+      operationId: api_v1_store_markets_create
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CarMarket'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CarMarket'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CarMarket'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CarMarket'
+          description: ''
+  /api/v1/store/markets/{id}/:
+    get:
+      operationId: api_v1_store_markets_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this car market.
+        required: true
+      tags:
+      - api
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CarMarket'
+          description: ''
+    put:
+      operationId: api_v1_store_markets_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this car market.
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CarMarket'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CarMarket'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CarMarket'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CarMarket'
+          description: ''
+    patch:
+      operationId: api_v1_store_markets_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this car market.
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedCarMarket'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedCarMarket'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedCarMarket'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CarMarket'
+          description: ''
+    delete:
+      operationId: api_v1_store_markets_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this car market.
+        required: true
+      tags:
+      - api
+      responses:
+        '204':
+          description: No response body
+  /api/v1/store/models/:
+    get:
+      operationId: api_v1_store_models_list
+      tags:
+      - api
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CarModel'
+          description: ''
+    post:
+      operationId: api_v1_store_models_create
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CarModel'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CarModel'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CarModel'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CarModel'
+          description: ''
+  /api/v1/store/models/{id}/:
+    get:
+      operationId: api_v1_store_models_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this car model.
+        required: true
+      tags:
+      - api
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CarModel'
+          description: ''
+    put:
+      operationId: api_v1_store_models_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this car model.
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CarModel'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CarModel'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CarModel'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CarModel'
+          description: ''
+    patch:
+      operationId: api_v1_store_models_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this car model.
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedCarModel'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedCarModel'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedCarModel'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CarModel'
+          description: ''
+    delete:
+      operationId: api_v1_store_models_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this car model.
+        required: true
+      tags:
+      - api
+      responses:
+        '204':
+          description: No response body
+  /api/v1/store/partcategory/:
+    get:
+      operationId: api_v1_store_partcategory_list
+      tags:
+      - api
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PartCategory'
+          description: ''
+    post:
+      operationId: api_v1_store_partcategory_create
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PartCategory'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PartCategory'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PartCategory'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PartCategory'
+          description: ''
+  /api/v1/store/partcategory/{id}/:
+    get:
+      operationId: api_v1_store_partcategory_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this part category.
+        required: true
+      tags:
+      - api
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PartCategory'
+          description: ''
+    put:
+      operationId: api_v1_store_partcategory_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this part category.
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PartCategory'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PartCategory'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PartCategory'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PartCategory'
+          description: ''
+    patch:
+      operationId: api_v1_store_partcategory_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this part category.
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedPartCategory'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedPartCategory'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedPartCategory'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PartCategory'
+          description: ''
+    delete:
+      operationId: api_v1_store_partcategory_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this part category.
+        required: true
+      tags:
+      - api
+      responses:
+        '204':
+          description: No response body
+  /api/v1/store/parts/:
+    get:
+      operationId: api_v1_store_parts_list
+      tags:
+      - api
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Part'
+          description: ''
+    post:
+      operationId: api_v1_store_parts_create
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PostPart'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PostPart'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PostPart'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PostPart'
+          description: ''
+  /api/v1/store/parts/{part_pk}/images/:
+    get:
+      operationId: api_v1_store_parts_images_list
+      parameters:
+      - in: path
+        name: part_pk
+        schema:
+          type: string
+        required: true
+      tags:
+      - api
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PartImage'
+          description: ''
+    post:
+      operationId: api_v1_store_parts_images_create
+      parameters:
+      - in: path
+        name: part_pk
+        schema:
+          type: string
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PartImage'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PartImage'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PartImage'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PartImage'
+          description: ''
+  /api/v1/store/parts/{part_pk}/images/{id}/:
+    get:
+      operationId: api_v1_store_parts_images_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      - in: path
+        name: part_pk
+        schema:
+          type: string
+        required: true
+      tags:
+      - api
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PartImage'
+          description: ''
+    put:
+      operationId: api_v1_store_parts_images_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      - in: path
+        name: part_pk
+        schema:
+          type: string
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PartImage'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PartImage'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PartImage'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PartImage'
+          description: ''
+    patch:
+      operationId: api_v1_store_parts_images_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      - in: path
+        name: part_pk
+        schema:
+          type: string
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedPartImage'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedPartImage'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedPartImage'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PartImage'
+          description: ''
+    delete:
+      operationId: api_v1_store_parts_images_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      - in: path
+        name: part_pk
+        schema:
+          type: string
+        required: true
+      tags:
+      - api
+      responses:
+        '204':
+          description: No response body
+  /api/v1/store/parts/{id}/:
+    get:
+      operationId: api_v1_store_parts_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this part.
+        required: true
+      tags:
+      - api
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Part'
+          description: ''
+    put:
+      operationId: api_v1_store_parts_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this part.
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PostPart'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PostPart'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PostPart'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PostPart'
+          description: ''
+    patch:
+      operationId: api_v1_store_parts_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this part.
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedPostPart'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedPostPart'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedPostPart'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PostPart'
+          description: ''
+    delete:
+      operationId: api_v1_store_parts_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this part.
+        required: true
+      tags:
+      - api
+      responses:
+        '204':
+          description: No response body
+  /api/v1/users/login/:
+    post:
+      operationId: api_v1_users_login_create
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginUser'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/LoginUser'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/LoginUser'
+        required: true
+      security:
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginUser'
+          description: ''
+  /api/v1/users/logout/:
+    post:
+      operationId: api_v1_users_logout_create
+      tags:
+      - api
+      responses:
+        '200':
+          description: No response body
+  /api/v1/users/logoutall/:
+    post:
+      operationId: api_v1_users_logoutall_create
+      description: |-
+        Log the user out of all sessions
+        I.E. deletes all auth tokens for the user
+      tags:
+      - api
+      responses:
+        '200':
+          description: No response body
+  /api/v1/users/profile/:
+    get:
+      operationId: api_v1_users_profile_list
+      tags:
+      - api
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UserProfile'
+          description: ''
+  /api/v1/users/profile/{id}/:
+    get:
+      operationId: api_v1_users_profile_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this user profile.
+        required: true
+      tags:
+      - api
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserProfile'
+          description: ''
+    put:
+      operationId: api_v1_users_profile_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this user profile.
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserProfile'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/UserProfile'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/UserProfile'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserProfile'
+          description: ''
+    patch:
+      operationId: api_v1_users_profile_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this user profile.
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedUserProfile'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedUserProfile'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedUserProfile'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserProfile'
+          description: ''
+  /api/v1/users/register/:
+    post:
+      operationId: api_v1_users_register_create
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Register'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Register'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Register'
+        required: true
+      security:
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Register'
+          description: ''
+  /api/v1/users/register/admin:
+    post:
+      operationId: api_v1_users_register_admin_create
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegisterAdmin'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/RegisterAdmin'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/RegisterAdmin'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RegisterAdmin'
+          description: ''
+components:
+  schemas:
+    BlankEnum:
+      enum:
+      - ''
+    Car:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        images:
+          type: array
+          items:
+            $ref: '#/components/schemas/CarImage'
+        price:
+          type: number
+          format: double
+          nullable: true
+        market:
+          type: integer
+          nullable: true
+        model:
+          type: integer
+          nullable: true
+        state:
+          oneOf:
+          - $ref: '#/components/schemas/StateEnum'
+          - $ref: '#/components/schemas/BlankEnum'
+        transmission:
+          nullable: true
+          oneOf:
+          - $ref: '#/components/schemas/TransmissionEnum'
+          - $ref: '#/components/schemas/NullEnum'
+        date:
+          type: string
+          format: date
+          readOnly: true
+        year:
+          type: integer
+          nullable: true
+        vitess:
+          type: integer
+          nullable: true
+        seats:
+          type: integer
+          nullable: true
+        seller:
+          allOf:
+          - $ref: '#/components/schemas/User'
+          readOnly: true
+      required:
+      - date
+      - id
+      - seller
+    CarImage:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        image:
+          type: string
+          format: uri
+          nullable: true
+          title: Store/images/cars
+      required:
+      - id
+    CarMarket:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        title:
+          type: string
+          maxLength: 255
+      required:
+      - id
+      - title
+    CarModel:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        title:
+          type: string
+          maxLength: 255
+        market:
+          type: integer
+      required:
+      - id
+      - market
+      - title
+    LoginUser:
+      type: object
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+      required:
+      - password
+    NullEnum:
+      enum:
+      - null
+    Part:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        seller:
+          allOf:
+          - $ref: '#/components/schemas/User'
+          readOnly: true
+        category:
+          type: integer
+        price:
+          type: number
+          format: double
+          nullable: true
+        is_verify:
+          type: boolean
+        date:
+          type: string
+          format: date
+          readOnly: true
+        state:
+          oneOf:
+          - $ref: '#/components/schemas/StateEnum'
+          - $ref: '#/components/schemas/BlankEnum'
+        market:
+          type: integer
+          nullable: true
+        model:
+          type: integer
+          nullable: true
+      required:
+      - category
+      - date
+      - id
+      - seller
+    PartCategory:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          maxLength: 255
+      required:
+      - id
+      - name
+    PartImage:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        image:
+          type: string
+          format: uri
+          nullable: true
+          title: Store/images/cars
+      required:
+      - id
+    PatchedCarImage:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        image:
+          type: string
+          format: uri
+          nullable: true
+          title: Store/images/cars
+    PatchedCarMarket:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        title:
+          type: string
+          maxLength: 255
+    PatchedCarModel:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        title:
+          type: string
+          maxLength: 255
+        market:
+          type: integer
+    PatchedPartCategory:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          maxLength: 255
+    PatchedPartImage:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        image:
+          type: string
+          format: uri
+          nullable: true
+          title: Store/images/cars
+    PatchedPostCar:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        images:
+          type: array
+          items:
+            $ref: '#/components/schemas/CarImage'
+        price:
+          type: number
+          format: double
+          nullable: true
+        market:
+          type: integer
+          nullable: true
+        model:
+          type: integer
+          nullable: true
+        state:
+          oneOf:
+          - $ref: '#/components/schemas/StateEnum'
+          - $ref: '#/components/schemas/BlankEnum'
+        transmission:
+          nullable: true
+          oneOf:
+          - $ref: '#/components/schemas/TransmissionEnum'
+          - $ref: '#/components/schemas/NullEnum'
+        date:
+          type: string
+          format: date
+          readOnly: true
+        year:
+          type: integer
+          nullable: true
+        vitess:
+          type: integer
+          nullable: true
+        seats:
+          type: integer
+          nullable: true
+    PatchedPostPart:
+      type: object
+      properties:
+        category_id:
+          type: integer
+        price:
+          type: number
+          format: double
+          nullable: true
+        date:
+          type: string
+          format: date
+          readOnly: true
+        market:
+          type: integer
+          nullable: true
+        model:
+          type: integer
+          nullable: true
+        images:
+          type: array
+          items:
+            $ref: '#/components/schemas/PartImage'
+    PatchedPostServiceProvider:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        user:
+          allOf:
+          - $ref: '#/components/schemas/User'
+          readOnly: true
+        services_ids:
+          type: array
+          items:
+            type: integer
+          writeOnly: true
+    PatchedService:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          maxLength: 255
+    PatchedUserProfile:
+      type: object
+      properties:
+        user:
+          $ref: '#/components/schemas/User'
+        phone_number:
+          type: integer
+          nullable: true
+        image:
+          type: string
+          format: uri
+          nullable: true
+        address:
+          type: integer
+          nullable: true
+        birth_date:
+          type: string
+          format: date
+          nullable: true
+    PostCar:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        images:
+          type: array
+          items:
+            $ref: '#/components/schemas/CarImage'
+        price:
+          type: number
+          format: double
+          nullable: true
+        market:
+          type: integer
+          nullable: true
+        model:
+          type: integer
+          nullable: true
+        state:
+          oneOf:
+          - $ref: '#/components/schemas/StateEnum'
+          - $ref: '#/components/schemas/BlankEnum'
+        transmission:
+          nullable: true
+          oneOf:
+          - $ref: '#/components/schemas/TransmissionEnum'
+          - $ref: '#/components/schemas/NullEnum'
+        date:
+          type: string
+          format: date
+          readOnly: true
+        year:
+          type: integer
+          nullable: true
+        vitess:
+          type: integer
+          nullable: true
+        seats:
+          type: integer
+          nullable: true
+      required:
+      - date
+      - id
+    PostPart:
+      type: object
+      properties:
+        category_id:
+          type: integer
+        price:
+          type: number
+          format: double
+          nullable: true
+        date:
+          type: string
+          format: date
+          readOnly: true
+        market:
+          type: integer
+          nullable: true
+        model:
+          type: integer
+          nullable: true
+        images:
+          type: array
+          items:
+            $ref: '#/components/schemas/PartImage'
+      required:
+      - category_id
+      - date
+    PostServiceProvider:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        user:
+          allOf:
+          - $ref: '#/components/schemas/User'
+          readOnly: true
+        services_ids:
+          type: array
+          items:
+            type: integer
+          writeOnly: true
+      required:
+      - id
+      - services_ids
+      - user
+    Register:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        username:
+          type: string
+          description: Required. 150 characters or fewer. Letters, digits and @/./+/-/_
+            only.
+          pattern: ^[\w.@+-]+$
+          maxLength: 150
+        email:
+          type: string
+          format: email
+          maxLength: 255
+        password:
+          type: string
+          writeOnly: true
+          maxLength: 128
+      required:
+      - email
+      - id
+      - password
+      - username
+    RegisterAdmin:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        username:
+          type: string
+          description: Required. 150 characters or fewer. Letters, digits and @/./+/-/_
+            only.
+          pattern: ^[\w.@+-]+$
+          maxLength: 150
+        password:
+          type: string
+          writeOnly: true
+          maxLength: 128
+      required:
+      - id
+      - password
+      - username
+    Service:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          maxLength: 255
+      required:
+      - id
+      - name
+    ServiceProvider:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        user:
+          allOf:
+          - $ref: '#/components/schemas/User'
+          readOnly: true
+        services:
+          type: array
+          items:
+            $ref: '#/components/schemas/Service'
+      required:
+      - id
+      - services
+      - user
+    StateEnum:
+      enum:
+      - NEW
+      - OLD
+      type: string
+      description: |-
+        * `NEW` - New
+        * `OLD` - Old
+    TransmissionEnum:
+      enum:
+      - AUTO
+      - MANUAL
+      - AUTOMANUAL
+      type: string
+      description: |-
+        * `AUTO` - Auto
+        * `MANUAL` - Manual
+        * `AUTOMANUAL` - Auto Manual
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        username:
+          type: string
+          description: Required. 150 characters or fewer. Letters, digits and @/./+/-/_
+            only.
+          pattern: ^[\w.@+-]+$
+          maxLength: 150
+        email:
+          type: string
+          format: email
+          maxLength: 255
+        first_name:
+          type: string
+          maxLength: 150
+        last_name:
+          type: string
+          maxLength: 150
+      required:
+      - email
+      - id
+      - username
+    UserProfile:
+      type: object
+      properties:
+        user:
+          $ref: '#/components/schemas/User'
+        phone_number:
+          type: integer
+          nullable: true
+        image:
+          type: string
+          format: uri
+          nullable: true
+        address:
+          type: integer
+          nullable: true
+        birth_date:
+          type: string
+          format: date
+          nullable: true
+      required:
+      - user

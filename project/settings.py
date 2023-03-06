@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'knox',
     "debug_toolbar",
     'django_filters',
+    'drf_spectacular',
 
     #django apps
     'users',
@@ -73,7 +74,7 @@ ROOT_URLCONF = 'project.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -165,6 +166,7 @@ INTERNAL_IPS = [
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': ('knox.auth.TokenAuthentication',),
     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
 }
 
 REST_KNOX = {
@@ -175,4 +177,12 @@ REST_KNOX = {
   'TOKEN_LIMIT_PER_USER': None,
   'AUTO_REFRESH': False,
   'AUTH_HEADER_PREFIX' : "Bearer"
+}
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'Tonobili API',
+    'DESCRIPTION': 'Your project description',
+    'VERSION': '1.0.0',
+    'SERVE_INCLUDE_SCHEMA': False,
+    # OTHER SETTINGS
 }
