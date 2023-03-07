@@ -170,9 +170,7 @@ AUTH_USER_MODEL = 'users.User'
 
 
 INTERNAL_IPS = [
-    
     "127.0.0.1",
-
 ]
 
 
@@ -198,5 +196,5 @@ SPECTACULAR_SETTINGS = {
     'DESCRIPTION': 'Your project description',
     'VERSION': '1.0.0',
     'SERVE_INCLUDE_SCHEMA': False,
-    # OTHER SETTINGS
+   
 }
