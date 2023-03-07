@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     "debug_toolbar",
     'django_filters',
     'drf_spectacular',
+    "corsheaders",
 
     #django apps
     'users',
@@ -62,6 +63,8 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",
+    "django.middleware.common.CommonMiddleware",
     'django.middleware.security.SecurityMiddleware',
     "debug_toolbar.middleware.DebugToolbarMiddleware",
     'django.contrib.sessions.middleware.SessionMiddleware',
